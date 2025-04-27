@@ -21,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/copy-generator" element={<CopyGenerator />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/image-localization" element={<ImageLocalization />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
