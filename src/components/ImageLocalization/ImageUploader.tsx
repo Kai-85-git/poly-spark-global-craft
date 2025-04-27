@@ -19,6 +19,15 @@ const ImageUploader = () => {
       setUploading(true);
       setProgress(0);
 
+      // Check if user is authenticated
+      const { data: sessionData } = await supabase.auth.getSession();
+      const userId = sessionData.session?.user.id;
+      
+      if (!userId) {
+        toast.error('ログインが必要です');
+        return;
+      }
+
       // Upload to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
@@ -35,12 +44,11 @@ const ImageUploader = () => {
       // Create conversion record
       const { error: dbError } = await supabase
         .from('image_conversions')
-        .insert([
-          {
-            original_image: data.path,
-            status: 'pending'
-          }
-        ]);
+        .insert({
+          user_id: userId,
+          original_image: data.path,
+          status: 'pending'
+        });
 
       if (dbError) {
         throw dbError;
