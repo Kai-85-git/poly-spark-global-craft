@@ -39,6 +39,116 @@ export type Database = {
         }
         Relationships: []
       }
+      sns_accounts: {
+        Row: {
+          account_name: string
+          created_at: string | null
+          id: string
+          platform: Database["public"]["Enums"]["sns_platform"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          account_name: string
+          created_at?: string | null
+          id?: string
+          platform: Database["public"]["Enums"]["sns_platform"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          account_name?: string
+          created_at?: string | null
+          id?: string
+          platform?: Database["public"]["Enums"]["sns_platform"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string | null
+          language: string | null
+          notification_enabled: boolean | null
+          theme: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          language?: string | null
+          notification_enabled?: boolean | null
+          theme?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          language?: string | null
+          notification_enabled?: boolean | null
+          theme?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      workspace_members: {
+        Row: {
+          created_at: string | null
+          role: string
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          role?: string
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string | null
+          role?: string
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -47,7 +157,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      sns_platform: "twitter" | "facebook" | "instagram" | "linkedin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -162,6 +272,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      sns_platform: ["twitter", "facebook", "instagram", "linkedin"],
+    },
   },
 } as const
